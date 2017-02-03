@@ -2,6 +2,8 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 
+//Port configuration for Heroku Server (port)
+const port = process.env.PORT || 3001;
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -24,24 +26,30 @@ app.use((req, res, next) => {
 
 app.use(express.static(__dirname + '/public'));
 
-hbs.registerHelper('getCurrentYear', () =>{
+/*
+ *hbs helpers
+ */
+
+hbs.registerHelper('getCurrentYear', () => {
   return new Date().getFullYear();
 });
 
-hbs.registerHelper('screamIt', (text)=>{
+hbs.registerHelper('screamIt', (text) => {
   return text.toUpperCase();
 });
 
 app.get('/', (req, res) => {
   res.render('home.hbs',{
     pageTitle: 'Home Page',
-    welcomeMessage: 'Hello Express'
+    welcomeMessage: 'Hello Express',
+    title: 'Home Page'
    });
 });
 
 app.get('/about',(req, res) => {
   res.render('about.hbs', {
     pageTitle: 'About Page',
+    title: 'About Us'
   });
 });
 
@@ -51,6 +59,6 @@ app.get('/bad', (req, res) => {
   });
 });
 
-app.listen(3001, () => {
-  console.log('Server is up on port 3001');
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}`);
 });
