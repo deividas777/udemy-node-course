@@ -9,6 +9,10 @@ var app = express();
 hbs.registerPartials(__dirname + '/views/partials');
 app.set('view engine', 'hbs');
 
+/*
+ *Middlevare
+ */
+
 app.use((req, res, next) => {
     var now = new Date().toString();
     var log = `${now}: ${req.method} ${req.url}`;
@@ -37,6 +41,10 @@ hbs.registerHelper('getCurrentYear', () => {
 hbs.registerHelper('screamIt', (text) => {
   return text.toUpperCase();
 });
+
+/*
+*Routes
+*/
 
 app.get('/', (req, res) => {
   res.render('home.hbs',{
